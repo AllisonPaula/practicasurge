@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Encriptador de Texto</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&family=Montserrat:wght@300&display=swap" rel="stylesheet">
+        <style>
+            * {
+                background: #f8f8f8;
+                margin: 2px;
+                padding: 2px;
+                font-family: "Inter", sans-serif;
+                line-height: 200%;
+            }
+            main {
+                display: flex;
+            }
+            .logo {
+                height: 48px;
+                width: 120px;
+                left: 40px;
+                top: 40px;
+                border-radius: 0px;
+                padding: 10px;
+                margin: 15px;
+            }
+            #mensaje {
+                height: 100px;
+                width: 600px;
+                left: 300px;
+                top: 200px;
+                border: none;
+                text-align: center;
+                margin: 20px;
+                padding: 10px;
+                font-size: 32px;
+                line-height: 48px;
+                font-weight: 400;
+                resize: none;
+            }
+            .advertencia {
+                height: 18px;
+                width: 205px;
+                left: 24px;
+                top: 0px;
+                margin: 10px;
+                padding: 1px;
+                font-size: 12px;
+                font-weight: bold;
+                line-height: 18px;
+                text-align: center;
+                font-style: italic;
+            }
+            .encriptarboton, .desencriptarboton, #copiar, #escuchar {
+                text-align: center;
+                background: #0A3871;
+                border: 1px solid black;
+                color: white;
+                border-radius: 24px;
+                height: 50px;
+                width: 150px;
+                font-size: 18px;
+                margin: 15px;
+                cursor: pointer;
+            }
+            .encriptarboton:hover, .desencriptarboton:hover, #copiar:hover, #escuchar:hover {
+                background: gray;
+                transform: scale(1.2);
+            }
+            .desencriptarboton {
+                background: #434444;
+            }
+            .desencriptarboton:hover {
+                background: #011630;
+            }
+            #resultado {
+                right: 100px;
+                top: 70px;
+                width: 560px;
+                height: 500px;
+                border-radius: 10px;
+                border-color: #011630;
+                margin: 20px;
+                padding: 30px;
+                text-align: center;
+                resize: none;
+                font-weight: 400;
+                font-size: 25px;
+            }
+            #sintexto {
+                display: inline;
+                position: absolute;
+                right: 100px;
+                top: 200px;
+                text-align: center;
+                font-size: 17px;
+                border: none;
+                resize: none;
+            }
+            .muñeco {
+                right: 200px;
+                top: 300px;
+                width: 300px;
+                height: 300px;
+                position: absolute;
+                display: inline;
+                padding: 5px;
+                margin: 2px;
+                border-radius: 10px;
+            }
+            footer {
+                text-align: center;
+                margin: 20px;
+                color: black;
+                font-size: 13px;
+            }
+            .ícono {
+                height: 40px;
+                width: 60px;
+                padding: 5px;
+                margin: 5px;
+                border-radius: 20%;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Encriptador y Desencriptador de Texto</h1>
+        </header>
+        <main class="contenedor-principal">
+            <section class="tarjetan1">
+                <textarea type="text" id="mensaje" cols="30" rows="6" placeholder="Ingrese el texto aquí"></textarea>
+                <div>
+                    <button type="button" id="encriptar" class="encriptarboton">Encriptar</button>
+                    <button type="button" id="desencriptar" class="desencriptarboton">Desencriptar</button>
+                </div>
+            </section>
+            <section>
+                <textarea type="text" id="resultado" cols="20" rows="10" placeholder="Ningún mensaje fue encontrado"></textarea>
+                <textarea type="text" id="sintexto" cols="50" rows="1" placeholder="Ingrese el texto que desea encriptar o desencriptar"></textarea>
+                <button id="copiar">Copiar</button>
+                <button id="escuchar">Escuchar</button>
+            </section>
+        </main>
+        <footer>
+            <p class="copyright">&copy; Copyright Encriptador de texto-2024 Por: Allison Paula</p>
+        </footer>
+        <script>
+            const inputMensaje = document.querySelector("#mensaje");
+            const inputResultado = document.querySelector("#resultado");
+
+            const btnEncriptar = document.querySelector("#encriptar");
+            const btnDesencriptar = document.querySelector("#desencriptar");
+            const btnCopiar = document.querySelector("#copiar");
+            const btnHablar = document.querySelector("#escuchar");
+
+            const tarjeta1 = document.querySelector(".tarjetan1");
+
+            function encriptar() {
+                if (!validarMensaje()) return;
+                var mensaje = inputMensaje.value;
+                var mensajeEncriptado = mensaje
+                    .replace(/e/g, "enter")
+                    .replace(/i/g, "imes")
+                    .replace(/o/g, "ober")
+                    .replace(/a/g, "ai")
+                    .replace(/u/g, "ufat");
+
+                document.getElementById("sintexto").style.display = "none";
+
+                inputResultado.value = mensajeEncriptado;
+            }
+
+            function desencriptar() {
+                if (!validarMensaje()) return;
+                var mensajeEncriptado = inputMensaje.value;
+                var mensaje = mensajeEncriptado
+                    .replace(/enter/g, "e")
+                    .replace(/imes/g, "i")
+                    .replace(/ober/g, "o")
+                    .replace(/ai/g, "a")
+                    .replace(/ufat/g, "u");
+
+                document.getElementById("sintexto").style.display = "none";
+
+                inputResultado.value = mensaje;
+            }
+
+            function copiar() {
+                var mensajeEncriptado = inputResultado.value;
+                navigator.clipboard.writeText(mensajeEncriptado);
+                inputMensaje.value = "";
+                inputMensaje.focus();
+                alert("El mensaje ha sido copiado.");
+            }
+
+            function escuchar() {
+                var mensajeEncriptado = inputResultado.value;
+                let msg = new SpeechSynthesisUtterance();
+                msg.text = mensajeEncriptado;
+                msg.lang = "es-ES";
+                window.speechSynthesis.speak(msg);
+            }
+
+            function validarMensaje() {
+                // Borrar errores previos
+                let erroresPrevios = tarjeta1.querySelectorAll(".error");
+                for (let err of erroresPrevios) {
+                    tarjeta1.removeChild(err);
+                }
+
+                var mensaje = inputMensaje.value;
+                let letrasValidas = "abcdefghijklmnñopqrstuvwxyz ";
+                let mensajeErroneo = document.createDocumentFragment();
+                for (let letra of mensaje) {
+                    if (!letrasValidas.includes(letra)) {
+                        let p = document.createElement("p");
+                        p.setAttribute("class", "error");
+                        p.textContent = `La letra ${letra} no es válida.`;
+                        mensajeErroneo.appendChild(p);
+                    }
+                }
+
+                if (mensajeErroneo.children.length === 0) {
+                    return true;
+                }
+
+                tarjeta1.appendChild(mensajeErroneo);
+                return false;
+            }
+
+            btnEncriptar.onclick = encriptar;
+            btnDesencriptar.onclick = desencriptar;
+            btnCopiar.onclick = copiar;
+            btnHablar.onclick = escuchar;
+        </script>
+    </body>
+</html>
